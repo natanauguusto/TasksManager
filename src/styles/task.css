@@ -1,0 +1,23 @@
+.task,.attachments,.attachment{
+    background-color: lightblue;
+    color:#222;
+    width: 100%;
+}
+form.container.center.list input[type=file]{
+    width: auto;
+    border-color: gray;
+}
+.attachments ul{
+    list-style: none;
+    gap:0.3rem;
+    
+}
+.attachments ul div{
+    list-style: none;
+    border-color: gray;
+    display: flex;
+    justify-content: space-between;    
+}
+.attachments ul li{
+    width:100%;
+}   

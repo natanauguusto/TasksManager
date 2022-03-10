@@ -1,0 +1,26 @@
+
+@import url('msg.css');
+@import url('layout.css');
+@import url('buttons.css');
+@import url('assets.css');
+@import url('fonts.css');
+@import url('table.css');
+@import url('form.css');
+@import url("task.css");
+*{
+    margin:0px;padding:0px;
+    box-sizing: border-box;
+}
+h1{
+    margin:1rem 0px;
+    color:white;
+}
+body{
+    background: rgb(1, 1, 43);
+    color:white;
+    align-self: center;
+}
+#app{
+    width:auto;
+    gap:1rem;
+}

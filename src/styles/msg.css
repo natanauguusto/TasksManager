@@ -1,0 +1,22 @@
+
+.msg{    
+    border-radius:3px;
+    border:1px solid;
+    font-family: monospace;
+    padding:1rem;
+}
+.error{
+    border-color:red;
+    background-color: rgb(247, 172, 164);
+    color:red;
+}
+.ok{
+    border-color:green;
+    color:green;
+    background-color:lightgreen;
+}
+.warn{
+    border-color: orangered;
+    color:orangered;
+    background-color:rgb(255, 205, 113);
+}

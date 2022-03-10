@@ -1,0 +1,26 @@
+{
+    "name": "natan/manager_tasks",
+    "description": "Manager Tasks",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        
+        "psr-4": {
+            "Natan\\ManagerTasks\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "natanauguusto",
+            "email": "natanaugusto63@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.4.3",
+        "ext-pdo": "*"
+        
+
+    }
+    
+}

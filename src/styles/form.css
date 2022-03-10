@@ -1,0 +1,29 @@
+form{
+    width: 100%;
+    background-color: lightblue;
+    color:#222;
+
+}
+form fieldset{
+    border-width:0px;
+}
+form > div{
+    width:100%;
+}
+form label{
+    color:#222;
+    font-weight: bold;
+}
+input,textarea{
+    border:1px solid lightgray;
+    padding:5px;
+    border-radius: 7px;
+    outline:gray;        
+    align-self: center;
+    width:100%;
+    min-width: 10px;
+    min-height: 10px;
+}
+form > div > div .container.center.left{
+    gap:5px;padding:0px;
+}

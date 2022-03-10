@@ -1,0 +1,19 @@
+table{
+    padding:0px;
+    border: 1px solid gray;
+}
+tr{
+    gap:5px;
+}
+tr:nth-child(1){
+    background-color: rgb(1, 1, 43);
+    color:white;
+    border-width:0px;
+}
+th,td{
+    padding:0px 1rem;
+}
+td{
+    height:.5rem;
+    color:white;
+}
