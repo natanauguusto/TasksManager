@@ -6,8 +6,6 @@
 - Canais YouTube: Robson V. Leite, Professor Edson Maia.
 
 # Tarefas a realizar:
-[ ] Implementação lembrete por E-mail utilizando PHPMailer.
+[ ] Implementação lembrete por E-mail utilizando PHPMailer. <br>
+
 [ ] Refatoração seguindo as PSR's.
-
-
-- 
