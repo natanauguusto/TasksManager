@@ -1,0 +1,13 @@
+# Primeira aplicação em PHP - Tasks Manager
+- Aplicação para aprender PHP com Integração de Banco de Dados desenvolvida com Arquitetura MVC.
+
+# Fontes de Conhecimento
+- Livro Desenvolvimento Web com PHP e MySQL-Casa do Codigo
+- Canais YouTube: Robson V. Leite, Professor Edson Maia.
+
+# Tarefas a realizar:
+[ ] Implementação lembrete por E-mail utilizando PHPMailer.
+[ ] Refatoração seguindo as PSR's.
+
+
+- 
