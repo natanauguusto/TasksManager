@@ -1,22 +1,22 @@
 <?php
     
 
-    $task = false;
-    $id = $_GET['id'];
-    $completed= false;
-    $action = 'add';
-    $buttonSubmit = "Cadastrar";    
-    if (!is_null($id)){
-       $task=$orm->search("tasks",$id);
-       $completed=treatCompleted($task->completed);       
-       $action = "edit";
-       $buttonSubmit="Editar";
-    }  
-    $actionPage ="{$action}";
+    // $task = false;
+    // $id = $data['id'];
+    // $completed= false;
+    // $action = 'add';
+    // $buttonSubmit = "Cadastrar";
+    // if (!is_null($id)){
+    //    $task=$orm->search("tasks",$id);
+    //    $completed=treatCompleted($task->completed); 
+    //    $action = "edit";
+    //    $buttonSubmit="Editar";
+    // }  
+    // $actionPage ="{$action}";
     
 ?>
 <form class="container border list" action="<?=$actionPage?>" method="POST">
-    <input type="hidden" name="id" value="<?=$_GET['id']?>"/>
+    <input type="hidden" name="id" value="<?=$id?>"/>
     <div class="container list left">
         <label for="">Tarefa:</label>
         <input type="text" name="name" value="<?=$task?$task->nome:''?>">
@@ -55,6 +55,6 @@
     <?php if(!is_null($id)):?>
         <a href="/" class="button remove"> Cancelar </a>
     <?php endif?>
-    <button class="button <?= str_replace(".php","",$action)?>"type="submit"><?=$buttonSubmit?></button>
+    <button class="button <?= $action?>"type="submit"><?=$buttonSubmit?></button>
     
 </form>

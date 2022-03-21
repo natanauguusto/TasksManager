@@ -1,4 +1,4 @@
-<?php if(is_null($_GET['id'])):?>
+
     <table class="container list center">
         <tbody class="border">
         <tr >
@@ -31,4 +31,3 @@
         <?php endforeach?>
         </tbody> 
     </table>
-<?php endif?>

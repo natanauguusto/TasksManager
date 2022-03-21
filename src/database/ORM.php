@@ -35,8 +35,10 @@ class ORM {
         }
         return $keys;
     }
-    private function tablename(object $object)
+    private function tablename( $object)
     {
+        if(is_string($object))
+            return $object;
         $classname=get_class($object);
         $array=explode('\\',$classname);
         return strtolower($array[array_key_last($array)]).'s';
@@ -94,7 +96,7 @@ class ORM {
         }
         return false;
     }
-    public function edit($object,$id)
+    public function edit(object $object,$id)
     {
         try
         {
@@ -109,8 +111,8 @@ class ORM {
             }
             $query=substr_replace($query,"",-1);  
             $query.=" WHERE id={$id};";
-            echo $query;
-            $this->database->loadSQL(strip_tags($query));
+            
+            $this->database->loadSQL(strip_tags($query),$data);
             return true;
         }catch(\PDOException $e)
         {
@@ -199,11 +201,11 @@ class ORM {
             die();
         }
     }
-    public function listAll($object,$condition)
+    public function listAll($object,$condition="")
     {
         //echo "Condição ".$condition;
         $dbname=$this->database->getSettings()['database']['dbname'];
-        if(!empty($condition))
+        if(strlen($condition)>0)
             $condition=" WHERE ".$condition;
         
         try{
@@ -214,7 +216,7 @@ class ORM {
             else
                 throw new \exception("Argument not is a String or Object!");
             $sql =strip_tags("SELECT * FROM {$dbname}.{$table} {$condition};");
-            //echo $sql;
+            // echo $sql;
             $stmt = $this->database->getConnection()->query($sql);
             $list = [];
             while ($row = $stmt -> fetch(\PDO::FETCH_ASSOC)){                
