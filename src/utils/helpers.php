@@ -23,8 +23,9 @@
     function uploadFile($userfile){
         try{
             // if(is_uploaded_file($userfile)){
+                mkdir(DESTINATION);
                 $pathFile=DESTINATION.$_FILES[$userfile]['name'];
-                echo $pathFile;
+                
                 return move_uploaded_file($_FILES[$userfile]['tmp_name'],$pathFile);
                 
             // }
@@ -36,8 +37,15 @@
         return false;
     }
         
-    
+    function removeFile($file){        
+        if(file_exists(DESTINATION.$file))            
+            return unlink(DESTINATION.$file);
+        return false;
+    }
     function downloadFile($file){
-        return DESTINATION.$file;
+        if(file_exists(DESTINATION.$file))
+            return DESTINATION.$file;
+        return "#";
+            
     }
 ?>

@@ -4,6 +4,8 @@
     border:1px solid;
     font-family: monospace;
     padding:1rem;
+    
+    height:auto;
 }
 .error{
     border-color:red;

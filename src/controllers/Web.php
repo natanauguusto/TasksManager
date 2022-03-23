@@ -14,8 +14,7 @@ class Web
     public function __construct(){
         $this->task=new Task();
         $this->attachment=new Attachment();
-        $this->orm=new ORM();
-        
+        $this->orm=new ORM();        
     }
     public function add(array $data){
         if(!empty($data['name'])){
@@ -43,7 +42,7 @@ class Web
         
         try{        
             $taskId = $data['id'];
-            var_dump($data);
+            //var_dump($data);
             $this->task->setTask($data['name'],$data['description'],!isset($data['completed'])?false:$data['completed'],$data['priority'],$data['date_time']);
             if(!$this->orm->edit($this->task,$taskId)){
                 echo "<span class='msg error'>Erro ao Editar Tarefa de ID {$taskId}></span>";
@@ -66,7 +65,17 @@ class Web
 
     public function remove(array $data):bool{
         try{
-            $taskId = $data['id'];            
+
+            $taskId = $data['id'];
+            $attachments=$this->orm->listAll("attachments","task_id=".$taskId);
+            
+            if($attachments){
+                foreach($attachments as $attachment){
+                    $this->orm->remove("attachments",$attachment->id);
+                    removeFile($attachment->nome);
+                }
+            }
+                
             if(!$this->orm->remove("tasks",$taskId)){
                 echo "<span class='msg error'>Erro ao Remover Tarefa de ID {$taskId}></span>";
             }
@@ -92,7 +101,7 @@ class Web
         $id=$data['id'];
         $action="add";
         $buttonSubmit="Cadastrar";
-        echo $id;
+        //echo $id;
         if (!is_null($id)){
             $task=$this->orm->search("tasks",$id);
             $completed=treatCompleted($task->completed);       
@@ -143,19 +152,22 @@ class Web
                 $extension = explode(".",$filename);        
                 $extension = $extension[count($extension)-1];                
                 $attach=($this->attachment)->setAttachment($filename,$extension,$taskId);
-                
+                $exists=count($this->orm->listAll("attachments"," nome='{$filename}'"))>0;
                 $upload=uploadFile('attachment');
                 
-                if($upload ){                
+                if($upload & !$exists){                                  
                     if(($this->orm)->save($attach))
                         header('Location:'.HOST.'/task/task_id?='.$taskId);
+                    else{
+                        $e = new Exception("Não foi possivel salvar arquivo");
+                        require "error.php";
+                    }
                 }else{
                     echo "<div class='container center list'>
-                                <span class='msg error'>
+                                <span class='container list msg error'>
                                     Erro ao Salvar Anexo!.
                                     - Pasta attachments está na raiz?
                                     - Arquivo ja existe?
-                                    
                                 <span>
                                 <a href='task?task_id={$taskId}' class='button remove'>Back</a>
                         </div>";
@@ -171,4 +183,5 @@ class Web
         }
         return false;
     }
+    
 }

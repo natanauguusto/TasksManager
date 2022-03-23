@@ -74,7 +74,7 @@ class ORM {
             
             $keys = $this->keys($object);
             $table = $this->tablename($object);
-            $dbname= $this->database->getSettings()['database']['dbname'];
+            $dbname= $this->getDatabase()->getSettings()['database']['dbname'];
             $data = ($this->tabledata($object));              
             $columns = implode(",",$keys);
             $values = "".implode(", ",array_values($data));
@@ -83,15 +83,15 @@ class ORM {
             $query= strip_tags(($query));
 
             // echo $query;
-            return $this->database->getConnection()->prepare($query)->execute($data);            
+            return $this->getDatabase()->getConnection()->prepare($query)->execute($data);            
         }
         catch(\PDOException $e)
         {
-            echo $this->database->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }catch(\Exception $e){
 
-            echo $this->database->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }
         return false;
@@ -100,7 +100,7 @@ class ORM {
     {
         try
         {
-            $dbname = $this->database->getSettings()['database']['dbname'];
+            $dbname = $this->getDatabase()->getSettings()['database']['dbname'];
             $query = "UPDATE {$dbname}.{$this->tablename($object)} SET ";
             $keys= $this->keys($object);
             $data = $this->tabledata($object);
@@ -112,16 +112,16 @@ class ORM {
             $query=substr_replace($query,"",-1);  
             $query.=" WHERE id={$id};";
             
-            $this->database->loadSQL(strip_tags($query),$data);
+            $this->getDatabase()->loadSQL(strip_tags($query),$data);
             return true;
         }catch(\PDOException $e)
         {
 
-            echo $this->database->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }catch(\Exception $e){
 
-            echo $this->database->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }
         return false;
@@ -129,7 +129,7 @@ class ORM {
     }
     public function remove($object, $id)
     {
-        $dbname=$this->database->getSettings()['database']['dbname'];
+        $dbname=$this->getDatabase()->getSettings()['database']['dbname'];
         $table="";
         if(is_object($object))
             $table = $this->tablename($object);
@@ -140,19 +140,17 @@ class ORM {
             
         try
         {
-
-            $query = strip_tags("DELETE FROM {$dbname}.{$table} WHERE id={$id};");            
-            
-            $this->database->getConnection()->prepare($query)->execute();            
+            $query = strip_tags("DELETE FROM {$dbname}.{$table} WHERE id={$id};");                        
+            $this->getDatabase()->getConnection()->prepare($query)->execute();            
             return true;
         }catch(\PDOException $e){
-            echo $this->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             return false;
         }
         return false;
     }
     public function search($object,$id){
-        $dbname=$this->database->getSettings()['database']['dbname'];
+        $dbname=$this->getDatabase()->getSettings()['database']['dbname'];
         $table = "";
         
         try
@@ -165,19 +163,19 @@ class ORM {
                 throw new \exception("Argument not is a String or Object!");
             $query=strip_tags("SELECT * FROM {$dbname}.{$table} WHERE id={$id};");
             // echo $query; 
-            $searched=$this->database->getConnection()->query($query)->fetch();#All(PDO::FETCH_ASSOC);
+            $searched=$this->getDatabase()->getConnection()->query($query)->fetch();#All(PDO::FETCH_ASSOC);
             // print_r($searched);
             if (count($searched)>0)
                 return (object)$searched;
             return [];
         }catch(\PDOException $e)
         {
-            echo $this->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }
     }
     public function searchFK($object,$fk,$id){
-        $dbname=$this->database->getSettings()['database']['dbname'];
+        $dbname=$this->getDatabase()->getSettings()['database']['dbname'];
         $table = "";
         
         try
@@ -190,21 +188,21 @@ class ORM {
                 throw new \exception("Argument not is a String or Object!");
             $query=strip_tags("SELECT * FROM {$dbname}.{$table} WHERE {$fk}={$id};");
             // echo $query; 
-            $searched=$this->database->getConnection()->query($query)->fetch();#All(PDO::FETCH_ASSOC);
+            $searched=$this->getDatabase()->getConnection()->query($query)->fetch();#All(PDO::FETCH_ASSOC);
             // print_r($searched);
             if (count($searched)>0)
                 return (object)$searched;
             return [];
         }catch(\PDOException $e)
         {
-            echo $this->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }
     }
     public function listAll($object,$condition="")
     {
         //echo "Condição ".$condition;
-        $dbname=$this->database->getSettings()['database']['dbname'];
+        $dbname=$this->getDatabase()->getSettings()['database']['dbname'];
         if(strlen($condition)>0)
             $condition=" WHERE ".$condition;
         
@@ -217,14 +215,14 @@ class ORM {
                 throw new \exception("Argument not is a String or Object!");
             $sql =strip_tags("SELECT * FROM {$dbname}.{$table} {$condition};");
             // echo $sql;
-            $stmt = $this->database->getConnection()->query($sql);
+            $stmt = $this->getDatabase()->getConnection()->query($sql);
             $list = [];
             while ($row = $stmt -> fetch(\PDO::FETCH_ASSOC)){                
                 $list[]=(object)$row;
             }
             return $list;
         }catch(\PDOException $e){
-            echo $this->getMessageHTML($e->getMessage());
+            echo $this->getDatabase()->getMessageHTML($e->getMessage());
             die();
         }
     }

@@ -17,13 +17,11 @@
     else if($lastPath=="add")
         $web->add($_POST);    
     else if($lastPath=="edit")    
-        $web->edit($_POST);
-    
+        $web->edit($_POST);    
     else if(strpos($lastPath,"remove?id=")>-1 )
         $web->remove($_GET);
     else if(strpos($lastPath,"task?task_id=")>-1)
-        $web->task($_GET);
-        // require __DIR__."/src/controllers/task.php";
+        $web->task($_GET);        
     # Rotas de Anexo
     else if($lastPath=="attachment")
         $web->attachment($_POST,$_FILES);
